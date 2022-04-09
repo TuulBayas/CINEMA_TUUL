@@ -1,0 +1,157 @@
+"""
+Movie Chatbot:
+Program to reserve movies with seats
+By Tuul
+"""
+
+def book_movie():
+    print("Welcome to Zaisan Tuul Cinema")
+    print("Order your movie and time with your seating")
+
+    print()
+    #The dictionaries with movie and time choices
+    movies = {'1': 'Suicide Squad','2':'Dont look Up', '3':'La La Land'}
+    times = {'1':'10:00','2':'4:00', '3':'22:45'}
+
+    #establishing the variables
+
+    name = None
+    movie_choice = None
+    seat_choice = None
+    phone_number = None
+
+    #Input the name of the person booking.
+    name = input("What is your name?  ")
+    print("Your booking reservation for this movie is under: ", name)
+    
+
+    print()
+    #user enters the phone number of the ordering users
+    phone_number = ''
+    while not phone_number.isnumeric():
+        number = input("Please enter your phone number:  ")
+    if not number.isnumeric():
+        print("Please enter a valid phone number.")
+
+
+    order = []
+
+    #movie booking process
+    print("---------------------------")
+
+    print("What is the choice of movie that you want to book?")
+    for code, choice in movies.items():
+        print (code, ':', choice)
+
+    print()
+
+
+    #movie choice validation using while
+    while movie_choice not in movies.keys():
+        movie_choice = input ('Please, enter your movie numbering: ')
+        if movie_choice not in movies:
+            print('Invalid movie code please add a valid number option.')
+        else:
+            order.append(movies[movie_choice])
+
+    #booking time
+    print("---------------------------")
+
+    print("What time would you like to view your film, please choose:")
+    for code, choice in times.items():
+        print (code, ':', choice)
+
+    print()
+    selected_time = None
+
+    #validating the session order
+    while selected_time not in times.keys():
+        selected_time = input ('Enter the time code here, please: ')
+        if selected_time not in times:
+            print('Incorrect time option.')
+        else:
+            order.append(times[selected_time])
+
+    #Dictionaries of seats for each movie.
+    movie_one_seats = {'1':[],'2':[], '3':[]}
+    movie_two_seats = {'1':[],'2':[], '3':[]}
+    movie_three_seats = {'1':[],'2':[], '3':[]}
+#Match case to select movie seats
+    match movie_choice:
+        case '1':
+            movie_seats = first_movie_seats
+        case '2':
+            movie_seats = second_movie_seats
+        case '3':
+            movie_seats = third_movie_seats
+    
+    #Show the seating chart to user
+    print(“Here are the available seats: ")
+    seat_text = ''
+    for seat_number in range(1,15):
+        if seat_number in movie_seats[time_order]:
+            seat_text = seat_text + 'x '
+        else:
+            seat_text = seat_text + str(seat_number) + ' '
+    print(seat_text)
+    
+    #User to choose their seat and seating choice
+    selected_seat = None
+    while selected_seat not in range(1,15):
+        try:
+            selected_seat = int(input('Select your seat: '))
+            
+        except:
+            print ("Wrong seat")
+            selected_seat = None
+    movie_seats[selected_time].append(selected_seat)
+
+    #Prints users seat selections
+    print()
+    seat_text = ''
+    for seat_number in range(1,15):
+        if seat_number in movie_seats[time_order]:
+            seat_text = seat_text + 'X '
+        else:
+            seat_text = seat_text + str(seat_number) + ' '
+    print("Your selected seats:")
+    print(seat_text)
+
+    print()
+
+    #Displays the full order to the user
+    print(f"Your final order: Name: {name}, Phone Number: {number} Movie Choice: {order[0]}, Selected Time: {order[1]}, Selected Seat Number: {selected_seat}")
+
+    print()
+
+#Function that removes users seat selection
+def cancel_seats(movie_choice, selected_time, movie_seats, selected_seat):
+    seats[movie_choice][time_choice].remove(selected_seat)
+    print("Your order has been canceled")
+
+rebook = 'yes'
+while rebook == 'yes':
+    book_movie()
+    validate = ''
+
+#Code for the user to confirm their order
+    while validate.lower() not in ('yes', 'no'):
+        validate = input ('Would you like to confirm your order? ')
+
+    if validate == 'yes':
+        print ('Your order has been completed.')
+    else:
+        cancel_seats(movie_choice, time_choice, movie_seats, seat_choice)
+
+    print()
+    rebook = ''
+    
+    #Code to ask if the user wants to book again
+    while rebook.lower() not in ('yes', 'no'):
+        rebook = input ('Would you like to book again? ')
+
+        if rebook == 'yes':
+            book_movie()
+        else:
+            print("Thank you for using our service")
+            break
